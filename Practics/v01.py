@@ -14,10 +14,7 @@ f.close()
 
 upbit = pyupbit.Upbit(access_key, secret_key)
 
-# 변수 설정
-target = cal_target("KRW-BTC")
-op_mode = False
-hold = False
+
 
 # 목표가 설정
 def cal_target(ticker):
@@ -28,6 +25,10 @@ def cal_target(ticker):
     target = today['open'] + yesterday_range * 0.5
     return(target)
 
+# 변수 설정
+target = cal_target("KRW-BTC")
+op_mode = False
+hold = False
 
 while True:
     now = datetime.datetime.now()
@@ -43,7 +44,7 @@ while True:
 
     # 매초마다 조건을 확인한 후 매수시도
     if op_mode is True and hold is False and price >= target:
-        # 매수
+    # 매수
         krw_balance = Upbit.get_balance("KRW")
         Upbit.buy_market_order("KRW-BTC", krw_balance)
         hold = True
@@ -59,10 +60,9 @@ while True:
             op_mode = False
             time.sleep(10)
 
-    # 상태 출력
-    print(f"현재시간 : {now} 목표가 : {target} 현재가 : {price} 보유상태 : {hold}")
+        # 상태 출력
+        print(f"현재시간 : {now} 목표가 : {target} 현재가 : {price} 보유상태 : {hold}")
 
-    time.sleep(1)
+        time.sleep(1)
 
 
-    
